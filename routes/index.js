@@ -5,8 +5,10 @@ var crypto = require('crypto');
 var moment = require('moment'); // require
 
 //ZOHO
-const CLIENT_ID= "1000.B23R4ROGMBQ8X2M8MG7E21ZGNGBZQG"
-const CLIENT_SECRET= "69cecf985280c85355edab462d610cf621a072c8d7"
+const CLIENT_ID= "1000.FNX9Y6ZAAIK556QGX8RK8H8NCXKSSS"
+const CLIENT_SECRET= "e2b9c1f80aa5e07273ca8f1492f02baa7408064f8f"
+// const CLIENT_ID= "1000.B23R4ROGMBQ8X2M8MG7E21ZGNGBZQG"
+// const CLIENT_SECRET= "69cecf985280c85355edab462d610cf621a072c8d7"
 const MAIN_URL= "https://payfort-zoho.herokuapp.com"
 const REDIRECT_URL= "https://payfort-zoho.herokuapp.com/token"
 const querystring = require('querystring');
