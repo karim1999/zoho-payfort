@@ -7,8 +7,8 @@ var moment = require('moment'); // require
 //ZOHO
 const CLIENT_ID= "1000.B23R4ROGMBQ8X2M8MG7E21ZGNGBZQG"
 const CLIENT_SECRET= "69cecf985280c85355edab462d610cf621a072c8d7"
-const MAIN_URL= "http://localhost:3000"
-const REDIRECT_URL= "http://localhost:3000/token"
+const MAIN_URL= "https://payfort-zoho.herokuapp.com"
+const REDIRECT_URL= "https://payfort-zoho.herokuapp.com/token"
 const querystring = require('querystring');
 const CUSTOMFIELD_ID= "886673000005162005"
 
