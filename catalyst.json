@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "targets": [
+      "payfort_function"
+    ],
+    "ignore": [],
+    "source": "functions"
+  }
+}
