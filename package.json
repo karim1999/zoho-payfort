@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
+    "start": "node ./index",
+    "dev": "nodemon ./index",
     "serverstart": "DEBUG=zoho-payfort:* npm run devstart"
   },
   "dependencies": {
