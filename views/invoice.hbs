@@ -1,0 +1,10 @@
+<form action="/generate" method="get">
+    <input type="hidden" name="token" value="{{token}}">
+    <select required name="organization_id" id="">
+        {{#each organizations}}
+            <option value="{{this.organization_id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <input required type="text" name="invoice_number" placeholder="Invoice Number" value="">
+    <input type="submit" value="Get Invoice">
+</form>
