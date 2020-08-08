@@ -197,8 +197,6 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
     state: 'token'
   }), ).then(response => {
     let token = response.data.access_token
-  }).catch(err => {
-    res.send("Error")
     axios.get("https://books.zoho.com/api/v3/invoices/"+invoiceId, {
       params: {
         organization_id
@@ -239,6 +237,8 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
     }).catch(err => {
       res.send("Error")
     })
+  }).catch(err => {
+    res.send("Error")
   })
   //   if(!token){
   //   res.render('accept', {
