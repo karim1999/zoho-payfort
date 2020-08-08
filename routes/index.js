@@ -9,12 +9,14 @@ const CLIENT_ID= "1000.FNX9Y6ZAAIK556QGX8RK8H8NCXKSSS"
 const CLIENT_SECRET= "e2b9c1f80aa5e07273ca8f1492f02baa7408064f8f"
 // const CLIENT_ID= "1000.B23R4ROGMBQ8X2M8MG7E21ZGNGBZQG"
 // const CLIENT_SECRET= "69cecf985280c85355edab462d610cf621a072c8d7"
+// const MAIN_URL= "http://localhost:3000"
+// const REDIRECT_URL= "http://localhost:3000/token"
 const MAIN_URL= "https://payfort-zoho.herokuapp.com"
 const REDIRECT_URL= "https://payfort-zoho.herokuapp.com/token"
 const querystring = require('querystring');
 const CUSTOMFIELD_ID= "2290844000000703035"
 // const CUSTOMFIELD_ID= "886673000005162005"
-
+const REFRESH_TOKEN= "1000.7059596eb4520d92c2da9e9eb4caa02e.11b9d3181e9ab0ff6341a4cec75063ef"
 
 
 //PAYFORT
@@ -46,6 +48,7 @@ router.get('/', function(req, res, next) {
     client_id: CLIENT_ID,
     response_type: "code",
     state: 'code',
+    access_type: 'offline',
     redirect_uri: REDIRECT_URL
   });
 });
@@ -58,11 +61,13 @@ router.get('/token', function(req, res, next) {
   console.log("code ", code)
   console.log("=================")
   axios.post("https://accounts.zoho.com/oauth/v2/token", querystring.stringify({
-    code: code,
+    // code: code,
+    refresh_token: REFRESH_TOKEN,
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
     redirect_uri: REDIRECT_URL,
-    grant_type: "authorization_code",
+    grant_type: "refresh_token",
+    // grant_type: "authorization_code",
     scope: "ZohoBooks.fullaccess.all",
     state: 'token'
   }), ).then(response => {
