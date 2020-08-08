@@ -18,7 +18,7 @@ const CUSTOMFIELD_ID= "2290844000000703035"
 
 
 //PAYFORT
-let live= false;
+let live= true;
 let access_code= "EN8jGDZpDQZBZGxibMKr";
 let merchant_identifier= 'b474b256';
 let merchant_reference= "";
