@@ -184,16 +184,21 @@ router.get('/complete/:invoiceId', function(req, res, next) {
 router.get('/invoice/:invoiceId', function(req, res, next) {
   let invoiceId= req.params.invoiceId
   let organization_id = req.query.organization_id;
-  let token = req.query.token;
-  if(!token){
-    res.render('accept', {
-      scope: "ZohoBooks.fullaccess.all",
-      client_id: CLIENT_ID,
-      response_type: "code",
-      state: invoiceId+"?organization_id__"+organization_id,
-      redirect_uri: REDIRECT_URL
-    });
-  }else{
+  // let token = req.query.token;
+  axios.post("https://accounts.zoho.com/oauth/v2/token", querystring.stringify({
+    // code: code,
+    refresh_token: REFRESH_TOKEN,
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    redirect_uri: REDIRECT_URL,
+    grant_type: "refresh_token",
+    // grant_type: "authorization_code",
+    scope: "ZohoBooks.fullaccess.all",
+    state: 'token'
+  }), ).then(response => {
+    let token = response.data.access_token
+  }).catch(err => {
+    res.send("Error")
     axios.get("https://books.zoho.com/api/v3/invoices/"+invoiceId, {
       params: {
         organization_id
@@ -234,7 +239,17 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
     }).catch(err => {
       res.send("Error")
     })
-  }
+  })
+  //   if(!token){
+  //   res.render('accept', {
+  //     scope: "ZohoBooks.fullaccess.all",
+  //     client_id: CLIENT_ID,
+  //     response_type: "code",
+  //     state: invoiceId+"?organization_id__"+organization_id,
+  //     redirect_uri: REDIRECT_URL
+  //   });
+  // }else{
+  // }
 });
 
 module.exports = router;
