@@ -208,7 +208,7 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
       let invoice= response.data.invoice
       let shaString= ""
       let unordered= {
-        'command': 'AUTHORIZATION',
+        'command': 'PURCHASE',
         'access_code': access_code,
         'merchant_identifier': merchant_identifier,
         'merchant_reference': Date.now(),
