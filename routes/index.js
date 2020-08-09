@@ -215,7 +215,7 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
         'amount': invoice.balance*100,
         'currency': invoice.currency_code,
         'language': 'en',
-        'customer_email': "karim.elbadry2@gmail.com",
+        'customer_email': "aciya@safetyfirstmed.ae",
         'order_description': invoice.invoice_number,
         'return_url': MAIN_URL+"/complete/"+invoiceId+"?organization_id="+organization_id+"&token="+token,
       }
