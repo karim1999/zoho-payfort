@@ -206,34 +206,43 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
       }
     }).then(response => {
       let invoice= response.data.invoice
-      let shaString= ""
-      let unordered= {
-        'command': 'PURCHASE',
-        'access_code': access_code,
-        'merchant_identifier': merchant_identifier,
-        'merchant_reference': Date.now(),
-        'amount': invoice.balance*100,
-        'currency': invoice.currency_code,
-        'language': 'en',
-        'customer_email': "aciya@safetyfirstmed.ae",
-        'order_description': invoice.invoice_number,
-        'return_url': MAIN_URL+"/complete/"+invoiceId+"?organization_id="+organization_id+"&token="+token,
-      }
-      let ordered = {};
-      Object.keys(unordered).sort().forEach(function(key) {
-        ordered[key] = unordered[key];
-      });
-      for (const property in ordered) {
-        shaString += `${property}=${ordered[property]}`;
-      }
-      shaString = SHA_request_phrase + shaString + SHA_request_phrase;
-      ordered.signature = crypto.createHash('sha256').update(shaString).digest("hex");
-      // res.send(ordered)
-      res.render('form', {
-        ...ordered,
-        invoiceId,
-        'redirect_url': redirectUrl
-      });
+      axios.get("https://books.zoho.com/api/v3/contacts/"+invoice.customer_id, {
+        params: {
+          organization_id
+        },
+        headers: {
+          'Authorization': 'Zoho-oauthtoken '+token,
+        }
+      }).then(contact => {
+        let shaString= ""
+        let unordered= {
+          'command': 'PURCHASE',
+          'access_code': access_code,
+          'merchant_identifier': merchant_identifier,
+          'merchant_reference': Date.now(),
+          'amount': invoice.balance*100,
+          'currency': invoice.currency_code,
+          'language': 'en',
+          'customer_email': contact.contact.email,
+          'order_description': invoice.invoice_number,
+          'return_url': MAIN_URL+"/complete/"+invoiceId+"?organization_id="+organization_id+"&token="+token,
+        }
+        let ordered = {};
+        Object.keys(unordered).sort().forEach(function(key) {
+          ordered[key] = unordered[key];
+        });
+        for (const property in ordered) {
+          shaString += `${property}=${ordered[property]}`;
+        }
+        shaString = SHA_request_phrase + shaString + SHA_request_phrase;
+        ordered.signature = crypto.createHash('sha256').update(shaString).digest("hex");
+        // res.send(ordered)
+        res.render('form', {
+          ...ordered,
+          invoiceId,
+          'redirect_url': redirectUrl
+        });
+      })
     }).catch(err => {
       res.send("Error")
     })
