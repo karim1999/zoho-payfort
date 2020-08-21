@@ -214,6 +214,7 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
           'Authorization': 'Zoho-oauthtoken '+token,
         }
       }).then(contact => {
+        console.log(contact)
         let shaString= ""
         let unordered= {
           'command': 'PURCHASE',
@@ -223,7 +224,7 @@ router.get('/invoice/:invoiceId', function(req, res, next) {
           'amount': invoice.balance*100,
           'currency': invoice.currency_code,
           'language': 'en',
-          'customer_email': contact.contact.email,
+          'customer_email': contact.email,
           'order_description': invoice.invoice_number,
           'return_url': MAIN_URL+"/complete/"+invoiceId+"?organization_id="+organization_id+"&token="+token,
         }
